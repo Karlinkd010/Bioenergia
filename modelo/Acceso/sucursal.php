@@ -1,17 +1,12 @@
 <?php
 class sucursal{
   
-    var $id;
-    var $direccion;
-    var $correo;
-    var $telefono;
+    var $id,$direccion,$correo,$telefono;
 
     /* Constructor*/
-
     public function sucursal(){
 
     }
-
     /* Gets*/
 
     public function getId(){

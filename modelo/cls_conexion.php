@@ -2,7 +2,6 @@
 class cls_conexion{
 
     public function __CONSTRUCT(){
-
         die("no se pudo conectar");
 
     }
@@ -13,25 +12,17 @@ class cls_conexion{
         $usuario= 'user_bioenergia';
         $pass = 'bioenergia';
 
-       
-        
         try 
-        {           
-               $conn =  new PDO( "sqlsrv:Server=".$servidor.";DataBase=".$dbName,$usuario,$pass); 
-              // $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            //$conn= new PDO("sqlsrv:server=DESKTOP-FAE6SU1;Database=qqq;ConnectionPooling=0", "taller", "udenar");
-          
+        {
+            $conn =  new PDO( "sqlsrv:Server=".$servidor.";DataBase=".$dbName,$usuario,$pass); 
         } 
         catch (PDOException $e) {
                 echo "no se pudo conectar, hay errores"; 
         }
-      
         return $conn;
-
     }
-
+    
     public function Desconectar(){
-
         $conn=null;
 
     }

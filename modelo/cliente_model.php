@@ -9,7 +9,7 @@
         private $Clientes;
         private $Empleados;
         private $Venta;
-        private $Suministro;
+        private $User;
 
 
         function __construct(){
@@ -21,6 +21,13 @@
             $fila=$this->DB->query($sql);
             $this->sucursal=$fila;
             return  $this->sucursal;
+
+        }
+        function getuser(){
+            $sql="SELECT * from tbl_usuario";
+            $fila=$this->DB->query($sql);
+            $this->user=$fila;
+            return  $this->user;
 
         }
 

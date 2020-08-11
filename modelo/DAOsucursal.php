@@ -4,7 +4,6 @@ require_once('acceso/sucursal.php');
 
 class DAOsucursal{
     private $DB;
-
     function __construct(){
         $this->DB=cls_conexion::conectar();
     }
@@ -20,13 +19,9 @@ class DAOsucursal{
        $query = $this->DB->prepare($sql);
        $query->execute([$direccion, $correo,$telefono]);
        if($query){
-           echo 1;
-           
-           
-        }
-            
+           echo 1;          
+        }          
     }
-
     public function actualizar($obj_sucursal){
         $id=$obj_sucursal->getId();
         $direccion=$obj_sucursal->getDireccion();
@@ -38,9 +33,11 @@ class DAOsucursal{
        $query->execute([$direccion, $correo,$telefono,$id]);
        if($query){
            echo 1;
-           
+      
         }
     }
+
+    
     public function eliminar($obj_sucursal){
 
         $id=$obj_sucursal->getId();

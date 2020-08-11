@@ -1,5 +1,9 @@
 <?php
-class usuario{
+
+class usuario {
+
+    protected $persona;
+
   
     
     var $id;
@@ -15,10 +19,16 @@ class usuario{
     
 
     /* Constructor*/
+   
 
-    public function usuario(){
+    public function usuario( ){
+        
 
+    } 
+    public function usuarioh( persona $persona){
+        $this->persona=$persona;
     }
+   
 
     /* Gets*/
     public function getId(){

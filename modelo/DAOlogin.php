@@ -10,24 +10,22 @@ class DAOlogin{
         $this->DB=cls_conexion::conectar();
     }
 
-    public function agregar($object,$object2){
+    public function agregar($object){
         
         $d2=$object->getUser();
         $d3=$object->getPass();
         $d4=$object->getPalabra();
         $d5=$object->getEstado();
         $d6=$object->getRol();
-        $d7=$object->getCodigo();
-        $d8=$object->getFecha();
-        $id_s=$object2->getId();
+        $id_s=$object->getId_persona();
 
        $this->DB->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-       $sql="INSERT into tbl_usuario values (?,(SELECT dbo.encriptar_pass(?)),?,?,?,?,?,?)";
+       $sql="INSERT into tbl_usuario values (?,(SELECT dbo.encriptar_pass(?)),?,?,?,null,getdate(),?)";
 
        $query = $this->DB->prepare($sql);
 
-       $query->execute([$d2,$d3,$d4,$d5,$d6,$d7,$d8,$id_s]);
+       $query->execute([$d2,$d3,$d4,$d5,$d6,$id_s]);
        if($query){
         echo 1;
     }
@@ -108,6 +106,47 @@ class DAOlogin{
         if($q->rowCount()==0){
             echo 0;
         }else{echo 1;}
+    
+    }
+    function getUser_correo($object,$object1){
+        $correo=$object->getvchCorreo();
+        $user=$object1->getUser();
+        $pregunta=$object1->getPalabra();
+        
+        $this->DB->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        
+        $sql1="SELECT *FROM recovery WHERE vchUser=?  and vchCorreo=? and vchSecret=? and intEstado =1";
+        
+        $q=$this->DB->prepare($sql1);
+        $q->execute([$user,$correo,$pregunta]);
+
+        if($q->rowCount()==0){
+            echo 0;
+        }else{
+            $_SESSION["user"] = $user;
+            $_SESSION["correo"] =$correo;
+            echo 1;}
+    
+    }
+
+    function recovery_pass($object1){
+        
+        $user=$object1->getUser();
+        $new_pass=$object1->getPass();
+        
+        $this->DB->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        
+        $sql1="UPDATE tbl_usuario set vchPass=(select dbo.encriptar_pass(?)) where vchUser=?";
+        
+        $q=$this->DB->prepare($sql1);
+        $q->execute([$new_pass,$user]);
+
+        if($q->rowCount()==0){
+            echo 0;
+        }else{
+            session_destroy();
+            
+            echo 1;}
     
     }
 }
